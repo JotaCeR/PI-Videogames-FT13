@@ -1,9 +1,13 @@
-import './App.css';
+import './styles/App.css';
+import { Route } from 'react-router-dom';
+import Home from './components/Home';
+import Main from './components/Main';
 
 function App() {
   return (
     <div className="App">
-      <h1>Henry Videogames</h1>
+      <Route exact path='/' render={() => <Home />} />
+      <Route exact path='/videogames' render={() => <Main />} />
     </div>
   );
 }

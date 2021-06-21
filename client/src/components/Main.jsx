@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { getVideogames } from '../actions/search';
 import Videogames from './Videogames';
-import Videogame from './Videogame';
+import NavBar from './NavBar';
 
 const Main = () => {
     let dispatch = useDispatch();
@@ -19,6 +19,7 @@ const Main = () => {
 
     return (
         <div className="Main">
+            <NavBar />
             <Videogames />
         </div>
     )

@@ -11,7 +11,7 @@ export default function Videogame ({name, img, genre, id}) {
             </Link>
             <div id="contain">
                 <img src={img} alt="portada del videojuego" id="imag" />
-                <p>Géneros: {genre}</p>
+                <p>Géneros: {genre.join(", ")}</p>
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import '../styles/Videogames.css';
 import {useDispatch, useSelector} from 'react-redux';
 import Videogame from './Videogame';
@@ -32,10 +32,18 @@ export default function Videogames () {
         dispatch(prevPage());
     }
 
-    if (vgs.length === 0) {
+    if (vgs.length === 0 && search.length === 0) {
         return (
             <div className="Videogames">
                 "Cargando"
+            </div>
+        )
+    } else if (search.length > 0) {
+        return (
+            <div className="Videogames">
+                <button id="left" name="prevPage" type="button" onClick={previousPagination}>Previous Page</button>
+                <button id="right" name="nextPage" type="button" onClick={nextPagination}>Next Page</button>
+                {search[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} id={vg.id} />)}
             </div>
         )
     } else {

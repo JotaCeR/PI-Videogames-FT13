@@ -1,9 +1,47 @@
 .NavBar {
     width: 100%;
     height: 50px;
-    background-color: black;
-    font-size: 50px;
-    flex-basis: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#tit {
+    color: #A569BD;
+    font-size: 30px;
+}
+
+.filters {
+    margin: 10px;
+}
+
+.filters select {
+    background-color: rgba(125, 60, 152, 0.75);
+    border-color: rgba(165, 105, 189, 0.75);
+}
+
+.NavBar form {
+    margin: 10px;
+}
+
+.NavBar button {
+    background-color: rgba(125, 60, 152, 0.75);
+    border-color: rgba(165, 105, 189, 0.75);
+}
+
+.NavBar input {
+    background-color: rgba(165, 105, 189, 0.75);
+    border-color: rgba(125, 60, 152, 0.75);
+    color: black;
+}
+
+::placeholder {
+    color: black;
 }
 
 /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 1); */

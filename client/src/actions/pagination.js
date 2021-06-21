@@ -9,3 +9,10 @@ export function prevPage() {
         type: 'PREV_PAGE'
     }
 }
+
+export function overPage(page) {
+    return {
+        type: 'OVER_PAGE',
+        payload: page
+    }
+}

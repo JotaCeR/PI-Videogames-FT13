@@ -2,11 +2,13 @@ require('dotenv').config();
 const { API_KEY } = process.env;
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
+const axios = require('axios');
 const { Videogame, Genre } = require('../db');
 
-router.get('/:gameId', async function (req, res) {
-    const { gameId } = req.params;
+router.get('/:game', async function (req, res) {
+    const { game } = req.params;
+    var url = `https://api.rawg.io/api/games/${game}?key=${API_KEY}`;
+    var response;
 
     class DetailedGame {
         constructor(name, image, rating, genres, description, releaseDate, platforms, id) {
@@ -21,7 +23,7 @@ router.get('/:gameId', async function (req, res) {
         }
     };
 
-    const response = await fetch(`https://api.rawg.io/api/games/${gameId}`).then(game => game.json()).catch(e => console.log(e));
+    response = (await axios.get(url)).data;
 
     const gen = [];
     const plats = [];
@@ -30,9 +32,9 @@ router.get('/:gameId', async function (req, res) {
 
     response.platforms.forEach(platform => plats.push(platform.platform.name));  
 
-    const game = new DetailedGame(response.name, response.background_image, response.rating, gen, response.description, response.released, plats, response.id);
+    const gameById = new DetailedGame(response.name, response.background_image, response.rating, gen, response.description, response.released, plats, response.id);
 
-    res.status(200).json(game).catch(e => console.log(e));
+    res.status(200).json(gameById);
 })
 
 router.get('/', async function(req, res) {

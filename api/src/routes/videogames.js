@@ -2,13 +2,13 @@ require('dotenv').config();
 const { API_KEY } = process.env;
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
 const { Videogame, Genre } = require('../db');
 const { Op } = require('sequelize');
+const axios = require('axios');
 
 router.get('/', async function(req, res) {
     
-    // Declaramos la clase para construir las respuestas de cada juego que fetcheemos.
+    // Declaramos las clases para construir las respuestas de cada juego que fetcheemos.
     class VideoGame {
         constructor (name, image, rating, genres, id) {
             this.name = name;
@@ -19,60 +19,80 @@ router.get('/', async function(req, res) {
         }
     }
 
-    // Acá obtenemos del query si es que hubo una búsqueda el parámetro.
+    // Acá obtenemos del query si es que hubo una búsqueda el parámetro y los valores del ordenamiento junto al filtrado.
     const search = req.query.name;
+    const order = req.query.order;
+    const filter = req.query.filter;
+
+    console.log(search);
     
-    // Acá vamos a fetchear dependiendo si hubo una search por query o no.
+    // Acá vamos a definir el url a fetchear dependiendo si hubo search por query o no.
+    var url;
     var response;
-    var answer = []; 
+    var answer = [];
+    var games;
+    var dbGames;
+    var dbSearch;
 
     if (search) {
-        response = await fetch(`https://api.rawg.io/api/games?search=${search}&key=${API_KEY}`).then(games => games.json()).catch(e => console.log(e));
-
-        //Acá transformamos los juegos de la API en objetos para enviar al front.
-        answer = response.results.map(function(x) {
-            new VideoGame(x.name, x.background_image, x.rating, x.genres, x.id)
-        });
-
-        // Acá consultamos a la DB por juegos con el mismo query del search.
-        let dbSearch = await Videogame.findAll({where: {
+        url = `https://api.rawg.io/api/games?search=${search}&key=${API_KEY}`;
+        response = (await axios.get(url)).data;
+        answer = response.results;
+        dbSearch = await Videogame.findAll({where:
+        {
             name: {
                 [Op.iLike]: `%${search}%`
             }
-        }});
-
-        // Acá juntamos tanto juegos de la API como de la DB.
-        answer = [...answer, dbSearch];
-
+        }})
     } else {
-        response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}`).then(games => games.json()).catch(e => console.log(e));
+        url = `https://api.rawg.io/api/games?key=${API_KEY}`;
         
-        response = response.results;
-        // Acá vamos a pushear los 100 primeros juegos, para no trabajar con todos los videojuegos de la API.
-        let i = 0;
-        
-        while (answer.length < 100) {
-            if (response[i]) {
-                answer.push(response[i]);
-            };
-            i++;
+        try {
+            for (let i = 0; i < 5; i++) {
+                response = (await axios.get(url)).data;
+                url = response.next;
+                games = response.results;
+                answer = [...answer, ...games];
+            }
+        } catch(e) { 
+            console.log(e);
         }
 
-        // Acá transformarmos cada videjuego
-        answer = answer.map(vg => new VideoGame(vg.name, vg.background_image, vg.rating, vg.genres, vg.id));
-
-        // Acá consultamos la DB por juegos originales
-        let dbGames = await Videogame.findAll({ include: Genre });
-
-        // Acá juntamos en un mismo array tanto juegos de la API como de la DB
-        answer = [...answer, ...dbGames];
+        dbGames = await Videogame.findAll({include: Genre});
     }
-    
-    // Acá lo ordenamos, por default, por orden alfabético sin discriminar por juegos de la API o DB.
-    answer.sort();
 
-    // Acá mandamos nuestra respuesta al front
-    res.status(200).json(answer).catch(e => console.log(e));
+    const mapedGames = answer.map((vg) => {
+        let theGenres = [];
+        vg.genres.forEach(g => theGenres.push(g.name));
+        return new VideoGame (vg.name, vg.background_image, vg.rating, theGenres, vg.id);
+    })
+
+    if (search && dbSearch !== undefined) {
+        answer = [...mapedGames, ...dbSearch]
+    } else if (dbGames !== undefined) {
+        answer = [...mapedGames, ...dbGames]
+    } else {
+        answer = mapedGames
+    }
+
+    let firstIndex = 0;
+    let lastIndex = 15;
+    let finalAnswer = [];
+
+    for (let i = 0; i < 7; i++) {
+        let newArr = answer.slice(firstIndex, lastIndex)
+        
+        finalAnswer = [...finalAnswer, newArr];
+
+        firstIndex = firstIndex + 15;
+        lastIndex = lastIndex + 15;
+    }
+
+    console.log(finalAnswer.length);
+    console.log(finalAnswer.flat().length);
+
+
+    res.status(200).json(finalAnswer);
 });
 
 module.exports = router;

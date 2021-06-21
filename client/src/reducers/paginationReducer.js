@@ -1,26 +1,30 @@
 let initialState = {
-    page: 1
+    page: 0
 }
 
 export default function paginationReducer (state = initialState, action) {
-    let currentValue = initialState.page;
+    let valueNow = state.page;
 
     switch (action.type) {
         case "NEXT_PAGE":
             return {
                 ...state,
-                page: currentValue + 1
+                page: valueNow + 1
             };
         case "PREV_PAGE":
-            /* if (page == 1) {
+            if (valueNow === 0) {
+                return state
+            } else {
                 return {
-                    state
-                }
-            } */
+                    ...state,
+                    page: valueNow - 1
+                };
+            }
+        case "OVER_PAGE":
             return {
                 ...state,
-                page: currentValue - 1
-            };
+                page: action.payload
+            }
         default:
             return state
     }

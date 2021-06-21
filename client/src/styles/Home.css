@@ -1,11 +1,26 @@
 .Home {
-    height: 51px;
-    width: 51px;
-    background: gray;
+    height: 100%;
+    width: 100%;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.joystick {
+    background-image: url('../img/joystick.png');
+    background-repeat: no-repeat;
+    width: 512px;
+    height: 398px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn {
-    height: 50px;
-    width: 50px;
-    background: blue;
+    height: 150px;
+    width: 150px;
+    color: white;
+    background: none;
+    border: none;
 }

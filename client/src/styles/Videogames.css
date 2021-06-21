@@ -1,0 +1,31 @@
+.Videogames {
+    height: 500px;
+    width: 1000px;
+    background-color: rgba(0, 0, 0, 0.75);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Videogames button {
+    position: fixed;
+    top: 66px;
+    background-color: rgba(125, 60, 152, 0.75);
+    border-color: rgba(165, 105, 189, 0.75);
+}
+
+#left {
+    left: 167px;
+    border-top-left-radius: 10px;
+}
+
+#right {
+    left: 268px;
+    border-top-right-radius: 10px;
+}

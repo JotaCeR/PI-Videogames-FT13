@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgba(67, 29, 102, 0.555);
   background-image: url('../img/bckg.png');
+  background-repeat: no-repeat;
 }
 
 code {

@@ -1,0 +1,42 @@
+.Videogame {
+    height: 275px;
+    width: 200px;
+    background-color: rgba(91, 44, 111, 0.8);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#title {
+    color: #A569BD;
+    font-size: 18px;
+    text-align: center;
+}
+
+#contain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 15px;
+}
+
+#imag {
+    height: 150px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#link {
+    color: #A569BD;
+}

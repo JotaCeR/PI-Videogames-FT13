@@ -11,7 +11,7 @@ function App() {
       <Route exact path='/' render={() => <Home />} />
       <Route exact path='/videogames' render={() => <Main />} />
       <Route exact path='/create' render={() => <CreateGame />} />
-      <Route exact path='/videogames/:id' render={({match}) => <DetailedGame id={match.params.id} />} />
+      <Route exact path='/videogame/:id' render={({match}) => <DetailedGame id={match.params.id} />} />
     </div>
   );
 }

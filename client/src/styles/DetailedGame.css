@@ -4,9 +4,64 @@
     align-items: center;
 }
 
-#detailedGame {
-    height: 700px;
-    width: 450px;
-    background-color: black;
-    color: white;
+#gameDetailed {
+    height: 400px;
+    width: 700px;
+    background-color: rgba(0, 0, 0, 0.75);
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+    border-radius: 25px;
+    padding: 50px;
+}
+
+#gameDetailed::-webkit-scrollbar {
+    width: 10px;
+}
+  
+#gameDetailed::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 7.5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0 0 7.5px rgba(0, 0, 0, 0.5);
+    background-color: #5B2C6F; 
+}
+  
+#gameDetailed::-webkit-scrollbar-thumb {
+    background-color: #6C3483;
+    outline: 1px solid #BB8FCE;
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: #7D3C98;
+}
+
+#container p {
+    background-color: #BB8FCE;
+    border-radius: 5px;
+    padding: 1.5px;
+}
+
+#ima {
+    height: auto;
+    width: auto;
+    max-height: 300px;
+    max-width: 500px;
+    align-self: center;
+}
+
+#detit {
+    margin: 7px;
+    color: #6C3483;
+    background-color: #BB8FCE;
+    padding: 1.5px;
+    border-radius: 5px;
 }

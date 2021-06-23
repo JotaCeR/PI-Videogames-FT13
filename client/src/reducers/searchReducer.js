@@ -1,7 +1,8 @@
 let initialState = {
     videogames: [],
     videogame: [],
-    gameDetail: {}
+    gameDetail: {},
+    genres: []
 };
 
 export default function searchReducer (state = initialState, action) {
@@ -23,6 +24,11 @@ export default function searchReducer (state = initialState, action) {
                 ...state,
                 gameDetail: action.payload
             };
+        case "GET_GENRES":
+            return {
+                ...state,
+                genres: action.payload
+            }
         default:
             return state
     }

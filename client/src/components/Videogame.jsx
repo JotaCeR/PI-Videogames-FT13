@@ -2,10 +2,10 @@ import React from 'react';
 import '../styles/Videogame.css';
 import { Link } from 'react-router-dom';
 
-export default function Videogame ({name, img, genre, id, key}) {
+export default function Videogame ({name, img, genre, id}) {
 
     return (
-        <div className="Videogame" key={key} id={id}>
+        <div className="Videogame" id={id}>
             <Link id="link" to={`/videogame/${id}`}>
                 <h1 id="title">{name}</h1>
             </Link>

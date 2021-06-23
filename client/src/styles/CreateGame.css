@@ -53,6 +53,9 @@
 
 .frm button {
     align-self: flex-end;
+    background-color: rgba(125, 60, 152, 0.75);
+    border-color: rgba(165, 105, 189, 0.75);
+    font-family: 'Orbitron', sans-serif;
 }
 
 #txt {
@@ -63,4 +66,25 @@
 #desc {
     height: 100px;
     width: 325px;
+}
+
+.errs {
+    background-color: rgba(219, 36, 36, 0.75);
+    color: white;
+    position: absolute;
+    top: 125px;
+    left: 300px;
+    width: 150px;
+    font-size: 15px;
+    padding: 2.5px;
+    /* border: double 5px yellow; */
+}
+
+#descr {
+    top: 175px;
+    border-radius: none;
+}
+
+#plt {
+    top: 225px;
 }

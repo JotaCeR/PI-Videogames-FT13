@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import '../styles/NavBar.css';
 // import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getVideogame,getVideogames } from '../actions/search';
+import { useDispatch, useSelector } from 'react-redux';
+import { getVideogame, getVideogames, getGenres } from '../actions/search';
 
 
 const NavBar = () => {
@@ -17,6 +17,8 @@ const NavBar = () => {
         genre: "all"
     });
 
+    let genres = useSelector(state => state.search.genres);
+
     function handleChanges(e) {
         e.preventDefault();
         setFilters({
@@ -26,14 +28,31 @@ const NavBar = () => {
     }
 
     useEffect(() => {
+        dispatch(getGenres())
+    }, []);
+
+    useEffect(() => {
         dispatch(getVideogames(filters))
     }, []);
 
     useEffect(() => {}, [filters]);
 
+    function alphabetic (gameOne, gameTwo) {
+        let nameOne = gameOne.name.toUpperCase();
+        let nameTwo = gameTwo.name.toUpperCase();
+        if (nameOne < nameTwo) {
+            return -1;
+        }
+        if (nameOne > nameTwo) {
+            return 1;
+        }
+        return 0;
+    };
+
+    genres.sort(alphabetic)
 
     return (
-        <div className="NavBar" key="03Nav">
+        <div className="NavBar">
             <form onSubmit={(e) => {
                     e.preventDefault();
                     dispatch(getVideogame(game, filters));
@@ -57,8 +76,8 @@ const NavBar = () => {
                     <option value="oth">Externos</option>
                 </select>
                 <select value={filters.genre} name="genre" onChange={handleChanges}>
-                    <option value="all">Todos</option>
-                    <option value="gens">Géneros</option>
+                    <option value="all">All</option>
+                    {genres.map(x => <option value={x.name}>{x.name}</option>)}
                 </select>
                 <input type="button" value="Ordenar" onClick={(e) => {
                     e.preventDefault();

@@ -9,39 +9,55 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Orbitron', sans-serif;
 }
 
 #tit {
     color: #A569BD;
     font-size: 30px;
+    font-family: 'Press Start 2P', cursive;
+    margin-left: 100px;
 }
 
 .filters {
-    margin: 10px;
+    margin-right: 40px;
+    font-family: 'Orbitron', sans-serif;
 }
 
 .filters select {
     background-color: rgba(125, 60, 152, 0.75);
     border-color: rgba(165, 105, 189, 0.75);
-}
-
-.NavBar form {
-    margin: 10px;
+    font-family: 'Orbitron', sans-serif;
 }
 
 .NavBar button {
     background-color: rgba(125, 60, 152, 0.75);
     border-color: rgba(165, 105, 189, 0.75);
+    font-family: 'Orbitron', sans-serif;
 }
 
 .NavBar input {
     background-color: rgba(165, 105, 189, 0.75);
     border-color: rgba(125, 60, 152, 0.75);
     color: black;
+    font-family: 'Orbitron', sans-serif;
 }
 
 ::placeholder {
     color: black;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.NavBar form {
+    margin-left: 20px;
+}
+
+.NavBar div {
+    margin: 10px;
+}
+
+#titlink {
+    text-decoration: none;
 }
 
 /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 1); */

@@ -1,8 +1,7 @@
 let initialState = {
     videogames: [],
     videogame: [],
-    gameDetail: [],
-    paginatedGames: []
+    gameDetail: {}
 };
 
 export default function searchReducer (state = initialState, action) {

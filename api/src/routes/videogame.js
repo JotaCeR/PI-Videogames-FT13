@@ -10,6 +10,8 @@ router.get('/:game', async function (req, res) {
     var url = `https://api.rawg.io/api/games/${game}?key=${API_KEY}`;
     var response;
 
+    console.log(game);
+
     class DetailedGame {
         constructor(name, image, rating, genres, description, releaseDate, platforms, id) {
             this.name = name;
@@ -37,8 +39,8 @@ router.get('/:game', async function (req, res) {
     res.status(200).json(gameById);
 })
 
-router.get('/', async function(req, res) {
+/*router.post('/', async function(req, res) {
     // AQUÍ EL POST DE UN JUEGO CREADOk
-})
+})*/ 
 
 module.exports = router;

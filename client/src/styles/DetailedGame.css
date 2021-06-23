@@ -1,0 +1,11 @@
+.DetailedGame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#detailedGame {
+    height: 700px;
+    width: 450px;
+    background-color: black;
+}

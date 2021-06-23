@@ -24,3 +24,29 @@
     background: none;
     border: none;
 }
+
+.msg {
+    position: absolute;
+    top: 75px;
+    right: 350px;
+    background-color: rgba(0, 0, 0, 0.75);
+    height: 200px;
+    width: 225px;
+    border-radius: 25px;
+    border: double #8E44AD 4px;
+    padding: 5px;
+    font-size: 15x;
+    text-align: justify;
+    overflow-y: auto;
+    color: #8E44AD;
+}
+
+.msg h1 {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    font-size: 15px;
+}
+
+.msg span {
+    font-size: 10px;
+}

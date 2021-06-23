@@ -3,6 +3,7 @@ import '../styles/Videogames.css';
 import {useDispatch, useSelector} from 'react-redux';
 import Videogame from './Videogame';
 import { nextPage, prevPage, overPage } from '../actions/pagination';
+import {Link} from 'react-router-dom';
 
 
 export default function Videogames () {
@@ -34,8 +35,22 @@ export default function Videogames () {
 
     if (vgs.length === 0 && search.length === 0) {
         return (
-            <div className="Videogames">
-                "Cargando"
+            <div class="loadingio-spinner-spinner-277hgb3yfo1">
+                <div class="ldio-zcztvl17j9o">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <h1 id="ldg">Loading...</h1>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         )
     } else if (search.length > 0) {
@@ -43,6 +58,7 @@ export default function Videogames () {
             <div className="Videogames">
                 <button id="left" name="prevPage" type="button" onClick={previousPagination}>Previous Page</button>
                 <button id="right" name="nextPage" type="button" onClick={nextPagination}>Next Page</button>
+                <Link to='/create'><button id="create" name="createGame" type="button">Create a Game</button></Link>
                 {search[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} id={vg.id} />)}
             </div>
         )
@@ -51,6 +67,7 @@ export default function Videogames () {
             <div className="Videogames">
                 <button id="left" name="prevPage" type="button" onClick={previousPagination}>Previous Page</button>
                 <button id="right" name="nextPage" type="button" onClick={nextPagination}>Next Page</button>
+                <Link to="/create"><button id="create" name="createGame" type="button">Create a Game</button></Link>
                 {vgs[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} id={vg.id} />)}
             </div>
         )

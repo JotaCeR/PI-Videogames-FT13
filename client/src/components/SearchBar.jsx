@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import { getVideogame } from "../actions/search";
+import '../styles/SearchBar.css';
 
 export default function SearchBar() {
-    let [search, setSearch] = useState('');
+    const [search, setSearch] = useState('');
     
     let dispatch = useDispatch();
 
@@ -15,15 +16,17 @@ export default function SearchBar() {
 
     function searchGame(e) {
         e.preventDefault();
-        console.log('search ', search);
+        console.log('search ', search); 
         dispatch(getVideogame(search));
         setSearch('');
     }
 
     return (
         <div className="SearchBar">
-            <input value={search} onChange={handleChange} type="text" className="searchBar" name="bus" placeholder="Busca un juego..." />
-            <button className="searchbtn" onClick={searchGame}>Buscar</button>
+            <form onSubmit={this.searchGame}>
+                <input value={search} onChange={handleChange} type="text" className="searchBar" name="bus" placeholder="Busca un juego..." />
+                <input className="searchbtn" type="submit" >Buscar</input>
+            </form>                
         </div>
     )
 }

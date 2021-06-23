@@ -22,6 +22,8 @@ router.get('/', async function (req, res) {
 
     const genresPackage = await Genre.findAll();
 
+    console.log(genresPackage.length);
+
     res.status(200).json(genresPackage);
 })
 

@@ -24,12 +24,8 @@ module.exports = (sequelize) => {
       type: DataTypes.REAL,
     },
     platforms: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
-    },
-    original: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
     }
   });
 };

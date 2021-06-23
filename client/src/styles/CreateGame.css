@@ -1,0 +1,66 @@
+.CreateGame {
+    height: 500px;
+    width: 500px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.frm {
+    height: 75%;
+    width: 75%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgba(125, 60, 152, 0.75);
+    padding: 5px;
+}
+
+.frm div {
+    margin-bottom: 15px;
+}
+
+.frm form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 2.5px;
+}
+
+.titl {
+    color:#BB8FCE;
+    font-size: 30px;
+    text-align: center;
+    align-self: center;
+    background-color: #7D3C98;
+    border-radius: 10px;
+    margin: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+.frm label {
+    color:#BB8FCE;
+}
+
+.frm button {
+    align-self: flex-end;
+}
+
+#txt {
+    display: flex;
+    flex-direction: column;
+}
+
+#desc {
+    height: 100px;
+    width: 325px;
+}

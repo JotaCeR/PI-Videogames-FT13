@@ -19,12 +19,23 @@ router.get('/', async function(req, res) {
         }
     }
 
+    const gameNotFound = {
+        name: "No games found",
+        id: 007
+    }
+
     // Acá obtenemos del query si es que hubo una búsqueda el parámetro y los valores del ordenamiento junto al filtrado.
     const search = req.query.name;
-    const order = req.query.order;
-    const filter = req.query.filter;
+    const direction = req.query.dir;
+    const clasification = req.query.clas;
+    const origin = req.query.or;
+    const genre = req.query.gen;
 
     console.log(search);
+    console.log(direction);
+    console.log(clasification);
+    console.log(origin);
+    console.log(genre);
     
     // Acá vamos a definir el url a fetchear dependiendo si hubo search por query o no.
     var url;
@@ -33,20 +44,21 @@ router.get('/', async function(req, res) {
     var games;
     var dbGames;
     var dbSearch;
+    
 
     if (search) {
         url = `https://api.rawg.io/api/games?search=${search}&key=${API_KEY}`;
         response = (await axios.get(url)).data;
         answer = response.results;
+
         dbSearch = await Videogame.findAll({where:
-        {
-            name: {
-                [Op.iLike]: `%${search}%`
-            }
-        }})
+            {
+                name: {
+                    [Op.iLike]: `%${search}%`
+                }
+            }})
     } else {
         url = `https://api.rawg.io/api/games?key=${API_KEY}`;
-        
         try {
             for (let i = 0; i < 5; i++) {
                 response = (await axios.get(url)).data;
@@ -75,11 +87,65 @@ router.get('/', async function(req, res) {
         answer = mapedGames
     }
 
+    // FILTRADO HELL
+
+    if (origin !== "all") {
+        switch (origin) {
+            case "own":
+                if (dbGames !== undefined) {
+                     return answer = dbGames
+                } else if (dbSearch !== undefined) {
+                    return answer = dbSearch
+                } else {
+                    res.status(404).json(gameNotFound);
+                }
+                break;
+            case "oth":
+                answer = mapedGames;
+                break;
+            default: return answer;
+        }
+    }
+
+    if (clasification === "nam") {
+        function alphabetic (gameOne, gameTwo) {
+            let nameOne = gameOne.name.toUpperCase();
+            let nameTwo = gameTwo.name.toUpperCase();
+            if (nameOne < nameTwo) {
+                return -1;
+            }
+            if (nameOne > nameTwo) {
+                return 1;
+            }
+            return 0;
+        };
+
+        answer.sort(alphabetic);
+        if (direction === "des") {
+            answer.reverse();
+        }
+    } else if (clasification === "rat") {
+        function rating (gameOne, gameTwo) {
+            return gameOne.rating - gameTwo.rating;
+        };
+
+        answer.sort(rating);
+        answer.reverse();
+
+        if (direction === "des") {
+            answer.reverse();
+        }
+    }
+
+
+    let finalAnswer = [];
     let firstIndex = 0;
     let lastIndex = 15;
-    let finalAnswer = [];
 
-    for (let i = 0; i < 7; i++) {
+    let measure = Math.ceil(answer.length/15);
+    console.log(measure);
+
+    for (let i = 0; i < measure; i++) {
         let newArr = answer.slice(firstIndex, lastIndex)
         
         finalAnswer = [...finalAnswer, newArr];
@@ -87,10 +153,6 @@ router.get('/', async function(req, res) {
         firstIndex = firstIndex + 15;
         lastIndex = lastIndex + 15;
     }
-
-    console.log(finalAnswer.length);
-    console.log(finalAnswer.flat().length);
-
 
     res.status(200).json(finalAnswer);
 });

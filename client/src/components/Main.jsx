@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 // import '../styles/Main.css';
-import {useDispatch, useSelector} from 'react-redux';
-import { getVideogames } from '../actions/search';
+// import {useDispatch, useSelector} from 'react-redux';
+// import { getVideogames } from '../actions/search';
 import Videogames from './Videogames';
 import NavBar from './NavBar';
 
@@ -17,7 +17,7 @@ const Main = () => {
     // useEffect(() => {}, [videogames]);
 
     return (
-        <div className="Main">
+        <div className="Main" key="02Main">
             <NavBar />
             <Videogames />
         </div>

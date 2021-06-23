@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../styles/NavBar.css';
-import SearchBar from './SearchBar';
+// import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getVideogame,getVideogames } from '../actions/search';
@@ -33,7 +33,7 @@ const NavBar = () => {
 
 
     return (
-        <div className="NavBar">
+        <div className="NavBar" key="03Nav">
             <form onSubmit={(e) => {
                     e.preventDefault();
                     dispatch(getVideogame(game, filters));
@@ -42,7 +42,7 @@ const NavBar = () => {
                 <input type='submit' value='Buscar' />
             </form>
             <Link id="titlink" to="/videogames"><div id="tit">Game Core</div></Link>
-            <div class="filters">
+            <div className="filters">
                 <select value={filters.direction} name="direction" onChange={handleChanges} >
                     <option value="asc" >Ascendente</option>
                     <option value="des" >Descendente</option>

@@ -35,8 +35,8 @@ export default function Videogames () {
 
     if (vgs.length === 0 && search.length === 0) {
         return (
-            <div class="loadingio-spinner-spinner-277hgb3yfo1">
-                <div class="ldio-zcztvl17j9o">
+            <div className="loadingio-spinner-spinner-277hgb3yfo1">
+                <div className="ldio-zcztvl17j9o">
                     <div></div>
                     <div></div>
                     <div></div>
@@ -55,20 +55,20 @@ export default function Videogames () {
         )
     } else if (search.length > 0) {
         return (
-            <div className="Videogames">
+            <div className="Videogames" key="04Search">
                 <button id="left" name="prevPage" type="button" onClick={previousPagination}>Previous Page</button>
                 <button id="right" name="nextPage" type="button" onClick={nextPagination}>Next Page</button>
                 <Link to='/create'><button id="create" name="createGame" type="button">Create a Game</button></Link>
-                {search[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} id={vg.id} />)}
+                {search[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} key={vg.id} id={vg.id} />)}
             </div>
         )
     } else {
         return(
-            <div className="Videogames">
+            <div className="Videogames" key="04Games">
                 <button id="left" name="prevPage" type="button" onClick={previousPagination}>Previous Page</button>
                 <button id="right" name="nextPage" type="button" onClick={nextPagination}>Next Page</button>
                 <Link to="/create"><button id="create" name="createGame" type="button">Create a Game</button></Link>
-                {vgs[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} id={vg.id} />)}
+                {vgs[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} key={vg.id} id={vg.id} />)}
             </div>
         )
     }

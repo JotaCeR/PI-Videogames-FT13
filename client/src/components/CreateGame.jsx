@@ -25,7 +25,7 @@ export default function CreateGame () {
 
     
     return (
-        <div className="CreateGame">
+        <div className="CreateGame" key="06PostGame">
             <NavBar />
             <div className="titl">Create your Game</div>
             <div className="frm">

@@ -7,9 +7,9 @@ const { Videogame, Genre } = require('../db');
 
 router.get('/:game', async function (req, res) {
     const { game } = req.params;
+    const source = req.params.source;
     var url = `https://api.rawg.io/api/games/${game}?key=${API_KEY}`;
     var response;
-    var dbGame;
 
     console.log(game)
 
@@ -29,29 +29,31 @@ router.get('/:game', async function (req, res) {
     const gen = [];
     const plats = [];
 
-    response = (await axios.get(url)).data;
+    try {
+        response = (await axios.get(url)).data;
 
-    response.genres.forEach(genre => gen.push(genre.name))
+        response.genres.forEach(genre => gen.push(genre.name))
 
-    response.platforms.forEach(platform => plats.push(platform.platform.name));
+        response.platforms.forEach(platform => plats.push(platform.platform.name));
 
-    const gameFromApi = new DetailedGame(response.name, response.background_image, response.rating, gen, response.description, response.released, plats, response.id);
-    
-    // if (gameFromApi.name == undefined) {
-    //     dbGame = await Videogame.findOne({where: {
-    //         id: game
-    //     }, include: Genre});
-        
-    //     let dbGenres = response.genre;
-        
-    //     dbGenres.forEach(genre => gen.push(genre.name))
-        
-    //     let gameFromDB = new DetailedGame(response.name, null, response.rating, gen, response.description, response.releaseDate, response.platforms, response.id);
-        
-    //     response = gameFromDB
-    // } else {
-    //     response = gameFromApi;
-    // }
+        const gameFromApi = new DetailedGame(response.name, response.background_image, response.rating, gen, response.description, response.released, plats, response.id);
+
+        response = gameFromApi
+
+        let dbGame = async (search) => {
+            return await Videogame.findOne({where: {id: search}, include: Genre})
+        } 
+    } catch (e) {
+        console.error(e);
+    }
+
+    if (source === true) {
+        try {
+            response = dbGame(game);
+        } catch (e) {
+            console.error(e);
+        }
+    }
    
 
     res.status(200).json(gameFromApi);
@@ -59,39 +61,36 @@ router.get('/:game', async function (req, res) {
 
 router.post('/', async function(req, res) {
     console.log(req.body);
-
     const {gameName, gameDescription, genres, releaseDate, rating, platforms} = req.body;
-
-    const gameCreated = await Videogame.create({
-        name: gameName,
-        description: gameDescription,
-        releaseDate,
-        rating,
-        platforms
-    })
-
-    // genres.forEach(async function (genre) {
-    //     let gen = await Genre.findOne({where:{name: genre}});
-
-    //     gameCreated.addGenre(gen);
-    // });
-
-    async function auxiliar (game, genre) {
-        await game.addGenre(await Genre.findOne({where: {name: genre}}));
+    let genresToAdd = async (genres) => {
+        let rows = [];
+        let gen = null;
+        for(let i = 0; i<genres.length; i++){
+            try {
+                gen = await Genre.findOne({ where: { name: genres[i] } });
+                rows.push(gen)
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        return rows;
+    };
+    try{
+        const gameCreated = await Videogame.create({
+            name: gameName,
+            description: gameDescription,
+            releaseDate,
+            rating,
+            platforms
+        });
+        console.log('gamecreated: ', gameCreated);
+        const ans = await gameCreated.addGenre(await genresToAdd(genres));
+        console.log('ans ', ans);
+    }catch(e){
+        console.log(e)
     }
-    
-    for (let i = 0; i < genres.length; i++) {
-        auxiliar(gameCreated, genres[i]);
-    }
-    
-
-    const loggeo = await Videogame.findOne({where: {name: gameCreated.name}, include: Genre})
-
-    console.log(loggeo);
-
-    console.log(`Nombre: ${gameCreated.name}`);
 
     res.status(200).send("¡Juego agregado a la DB!");
-})
+});
 
 module.exports = router;

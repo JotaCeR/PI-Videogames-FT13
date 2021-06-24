@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
     platforms: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    original: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   });
 };

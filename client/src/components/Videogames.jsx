@@ -62,7 +62,7 @@ export default function Videogames () {
                 <button id="left" name="prevPage" type="button" onClick={previousPagination}>Previous Page</button>
                 <button id="right" name="nextPage" type="button" onClick={nextPagination}>Next Page</button>
                 <Link to='/create'><button id="create" name="createGame" type="button">Create a Game</button></Link>
-                {search[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} key={vg.id} id={vg.id} />)}
+                {search[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} key={vg.id} id={vg.id} source={vg.source} />)}
             </div>
         )
     } else {
@@ -71,7 +71,7 @@ export default function Videogames () {
                 <button id="left" name="prevPage" type="button" onClick={previousPagination}>Previous Page</button>
                 <button id="right" name="nextPage" type="button" onClick={nextPagination}>Next Page</button>
                 <Link to="/create"><button id="create" name="createGame" type="button">Create a Game</button></Link>
-                {vgs[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} key={vg.id} id={vg.id} />)}
+                {vgs[page].map(vg => <Videogame name={vg.name} img={vg.img} genre={vg.genres} key={vg.id} id={vg.id} sourcer={vg.source} />)}
             </div>
         )
     }

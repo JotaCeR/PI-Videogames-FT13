@@ -14,9 +14,13 @@ export default function CreateGame () {
         platforms: ""
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        name: "⚬ A name is required",
+        description: "⚬ A description is required",
+        platforms: "⚬ The playable platforms are required"
+    });
 
-    let genres = useSelector(state => state);
+    let genres = useSelector(state => state.search.genres);
 
     function validation(input) {
         let errors = {};
@@ -49,6 +53,17 @@ export default function CreateGame () {
             [e.target.name]: e.target.value
         }));
     };
+
+    function handleCbx (e) {
+        e.preventDefault();
+
+        if (!game.genres.find(genre => genre === e.target.value)) {
+            setGame(gam => ({
+                ...gam,
+                genres: [...game.genres, e.target.value]
+            }))
+        } else (setGame(game));
+    }
 
     let flag = false;
 
@@ -91,7 +106,91 @@ export default function CreateGame () {
                     </div>
                     <div>
                         <label>Game Genres: </label>
-                        <input name="genres" value={game.genres} type="text" onChange={(e) => handleChange(e)} />
+                        {/* <input name="genres" value={game.genres} type="text" onChange={(e) => handleChange(e)} /> */}
+                        {/* {genres.map((gen) => {
+                            <div className="cbxs">
+                            <label for={gen.name}>{gen.name}</label>
+                            <input name={gen.name} value={gen.name} type="checkbox" id={gen.name} />
+                            </div>
+                        })} */}
+                        <div className="cbxs">
+                            <div>
+                                <label for="Action">Action</label>
+                                <input name="Action" value="Action" type="checkbox" id="Action" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Adventure">Adventure</label>
+                                <input name="Adventure" value="Adventure" type="checkbox" id="Adventure" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Arcade">Arcade</label>
+                                <input name="Arcade" value="Arcade" type="checkbox" id="Arcade" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Board Games">Board Games</label>
+                                <input name="Board Games" value="Board Games" type="checkbox" id="Board Games" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Card">Card</label>
+                                <input name="Card" value="Card" type="checkbox" id="Card" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Casual">Casual</label>
+                                <input name="Casual" value="Casual" type="checkbox" id="Casual" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Educational">Educational</label>
+                                <input name="Educational" value="Educational" type="checkbox" id="Educational" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Family">Family</label>
+                                <input name="Family" value="Family" type="checkbox" id="Family" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Fighting">Fighting</label>
+                                <input name="Fighting" value="Fighting" type="checkbox" id="Fighting" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Indie">Indie</label>
+                                <input name="Indie" value="Indie" type="checkbox" id="Indie" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Massively Multiplayer">Massively Multiplayer</label>
+                                <input name="Massively Multiplayer" value="Massively Multiplayer" type="checkbox" id="Massively Multiplayer" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Platformer">Platformer</label>
+                                <input name="Platformer" value="Platformer" type="checkbox" id="Platformer" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Puzzle">Puzzle</label>
+                                <input name="Puzzle" value="Puzzle" type="checkbox" id="Puzzle" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Racing">Racing</label>
+                                <input name="Racing" value="Racing" type="checkbox" id="Racing" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="RPG">RPG</label>
+                                <input name="RPG" value="RPG" type="checkbox" id="RPG" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Shooter">Shooter</label>
+                                <input name="Shooter" value="Shooter" type="checkbox" id="Shooter" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Simulation">Simulation</label>
+                                <input name="Simulation" value="Simulation" type="checkbox" id="Simulation" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Sports">Sports</label>
+                                <input name="Sports" value="Sports" type="checkbox" id="Sports" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                            <div>
+                                <label for="Strategy">Strategy</label>
+                                <input name="Strategy" value="Strategy" type="checkbox" id="Strategy" onChange={(e) => handleCbx(e)}/>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <label>Game Platforms: </label>

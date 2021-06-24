@@ -16,6 +16,8 @@ export default function DetailedGame ({id}) {
 
     useEffect(() => {}, [detailedGame]);
 
+    console.log(detailedGame);
+
     if (!detailedGame) {
         return (
             <div className="DetailedGame">

@@ -20,8 +20,7 @@ router.get('/', async function(req, res) {
     }
 
     const gameNotFound = {
-        name: "No games found",
-        id: 007
+        name: "No games found"
     }
 
     // Acá obtenemos del query si es que hubo una búsqueda el parámetro y los valores del ordenamiento junto al filtrado.
@@ -93,17 +92,79 @@ router.get('/', async function(req, res) {
         switch (origin) {
             case "own":
                 if (dbGames !== undefined) {
-                     return answer = dbGames
+                    answer = dbGames;
                 } else if (dbSearch !== undefined) {
-                    return answer = dbSearch
+                    answer = dbSearch;
                 } else {
-                    res.status(404).json(gameNotFound);
+                    return res.status(404).json(gameNotFound);
                 }
                 break;
             case "oth":
                 answer = mapedGames;
                 break;
             default: return answer;
+        }
+    }
+
+    if (genre !== "all") {
+        switch (genre) {
+            case "Action":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Action"));
+                break;
+            case "Adventure":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Adventure"));
+                break;
+            case "Arcade":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Arcade"));
+                break;
+            case "Board Games":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Board Games"));
+                break;
+            case "Card":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Card"));
+                break;
+            case "Casual":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Casual"));
+                break;
+            case "Educational":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Educational"));
+                break;
+            case "Family":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Family"));
+                break;
+            case "Fighting":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Fighting"));
+                break;
+            case "Indie":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Indie"));
+                break;
+            case "Massively Multiplayer":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Massively Multiplayer"));
+                break;
+            case "Platformer":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Plaformer"));
+                break;
+            case "Puzzle":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Puzzle"));
+                break;
+            case "Racing":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Racing"));
+                break;
+            case "RPG":
+                answer = answer.filter(game => game.genres.find(genre => genre == "RPG"));
+                break;
+            case "Shooter":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Shooter"));
+                break;
+            case "Simulation":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Simulation"));
+                break;
+            case "Sports":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Sports"));
+                break;
+            case "Strategy":
+                answer = answer.filter(game => game.genres.find(genre => genre == "Strategy"));
+                break;
         }
     }
 
@@ -143,7 +204,6 @@ router.get('/', async function(req, res) {
     let lastIndex = 15;
 
     let measure = Math.ceil(answer.length/15);
-    console.log(measure);
 
     for (let i = 0; i < measure; i++) {
         let newArr = answer.slice(firstIndex, lastIndex)
@@ -154,7 +214,11 @@ router.get('/', async function(req, res) {
         lastIndex = lastIndex + 15;
     }
 
-    res.status(200).json(finalAnswer);
+    if (finalAnswer == undefined) {
+        res.status(404).send("No se han encontrado juegos")
+    } else {
+        res.status(200).json(finalAnswer);
+    };
 });
 
 module.exports = router;

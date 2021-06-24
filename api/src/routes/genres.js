@@ -2,11 +2,12 @@ require('dotenv').config();
 const { API_KEY } = process.env;
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
+const axios = require('axios');
 const { Videogame, Genre } = require('../db');
 
 router.get('/', async function (req, res) {
-    const response = await fetch(`https://api.rawg.io/api/genres?key=${API_KEY}`).then(genres => genres.json()).catch(e => console.log(e));
+    const response = (await axios.get(`https://api.rawg.io/api/genres?key=${API_KEY}`)).data
     let genres = [];
 
     response.results.forEach(genre => genres.push(genre.name));

@@ -12,6 +12,7 @@ router.get('/:game', async function (req, res) {
     var response;
 
     console.log(game)
+    console.log(source)
 
     class DetailedGame {
         constructor(name, image, rating, genres, description, releaseDate, platforms, id) {
@@ -29,34 +30,40 @@ router.get('/:game', async function (req, res) {
     const gen = [];
     const plats = [];
 
-    try {
-        response = (await axios.get(url)).data;
-
-        response.genres.forEach(genre => gen.push(genre.name))
-
-        response.platforms.forEach(platform => plats.push(platform.platform.name));
-
-        const gameFromApi = new DetailedGame(response.name, response.background_image, response.rating, gen, response.description, response.released, plats, response.id);
-
-        response = gameFromApi
-
-        let dbGame = async (search) => {
-            return await Videogame.findOne({where: {id: search}, include: Genre})
-        } 
-    } catch (e) {
-        console.error(e);
-    }
-
     if (source === true) {
         try {
+            let dbGame = async (search) => {
+                return await Videogame.findOne({where: {id: search}, include: Genre})
+            }
             response = dbGame(game);
+
+            response.genres.forEach(genre => gen.push(genre.name));
+
+            const holdMyGame = new DetailedGame(response.name, null, response.rating, gen, response.description, response.releaseDate, response.platforms, response.id);
+
+            response = holdMyGame;
+        } catch (e) {
+            console.error(e);
+        }
+    } else {
+        try {
+            response = (await axios.get(url)).data;
+    
+            response.genres.forEach(genre => gen.push(genre.name))
+    
+            response.platforms.forEach(platform => plats.push(platform.platform.name));
+    
+            const gameFromApi = new DetailedGame(response.name, response.background_image, response.rating, gen, response.description, response.released, plats, response.id);
+    
+            response = gameFromApi
+     
         } catch (e) {
             console.error(e);
         }
     }
    
 
-    res.status(200).json(gameFromApi);
+    res.status(200).json(response);
 })
 
 router.post('/', async function(req, res) {

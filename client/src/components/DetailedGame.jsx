@@ -25,7 +25,7 @@ export default function DetailedGame ({id}) {
                 <div id="noGame">No game has been found.</div>
             </div>
         )
-    } else {
+    } else /*if (detailedGame.length > 0)*/ {
         return (
             <div className="DetailedGame" id={detailedGame.id}>
                 <NavBar />
@@ -42,5 +42,10 @@ export default function DetailedGame ({id}) {
                 </div>
             </div>
         )
-    } 
+    
+    } /*else {
+        return (
+            <NavBar />
+        )
+    }*/
 }

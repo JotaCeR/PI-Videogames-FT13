@@ -10,12 +10,13 @@ router.get('/', async function(req, res) {
     
     // Declaramos las clases para construir las respuestas de cada juego que fetcheemos.
     class VideoGame {
-        constructor (name, image, rating, genres, id) {
+        constructor (name, image, rating, genres, id, source) {
             this.name = name;
             this.img = image;
             this.rating = rating;
             this.genres = genres;
             this.id = id;
+            this.source = source;
         }
     }
 
@@ -45,7 +46,7 @@ router.get('/', async function(req, res) {
     var dbSearch;
     
 
-    if (search) {
+    if (search !== undefined) {
         url = `https://api.rawg.io/api/games?search=${search}&key=${API_KEY}`;
         response = (await axios.get(url)).data;
         answer = response.results;
@@ -55,7 +56,15 @@ router.get('/', async function(req, res) {
                 name: {
                     [Op.iLike]: `%${search}%`
                 }
-            }})
+            }, include: Genre});
+
+        const holdGames = dbSearch.map((g) => {
+            let gamesGen = [];
+            g.genres.forEach(g => gamesGen.push(g.name));
+            return new VideoGame (g.name, null, g.rating, gamesGen, g.id, g.original);
+        });
+
+        dbSearch = holdGames;
     } else {
         url = `https://api.rawg.io/api/games?key=${API_KEY}`;
         try {
@@ -70,6 +79,14 @@ router.get('/', async function(req, res) {
         }
 
         dbGames = await Videogame.findAll({include: Genre});
+
+        const holdGames2 = dbGames.map((g) => {
+            let gamesGen = [];
+            g.genres.forEach(g => gamesGen.push(g.name));
+            return new VideoGame (g.name, null, g.rating, gamesGen, g.id, g.original);
+        });
+
+        dbGames = holdGames2;
     }
 
     const mapedGames = answer.map((vg) => {

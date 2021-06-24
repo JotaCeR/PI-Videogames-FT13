@@ -30,7 +30,7 @@ router.get('/:game', async function (req, res) {
     const gen = [];
     const plats = [];
 
-    if (source === true) {
+    if (source === "true") {
         try {
             let dbGame = async (search) => {
                 return await Videogame.findOne({where: {id: search}, include: Genre})
@@ -44,6 +44,7 @@ router.get('/:game', async function (req, res) {
             response = holdMyGame;
         } catch (e) {
             console.error(e);
+            res.status(404).send("Can't catch DB game")
         }
     } else {
         try {
@@ -59,6 +60,7 @@ router.get('/:game', async function (req, res) {
      
         } catch (e) {
             console.error(e);
+            res.status(404).send("Something really bad happened!")
         }
     }
    

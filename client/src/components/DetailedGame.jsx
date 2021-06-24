@@ -18,7 +18,7 @@ export default function DetailedGame ({id}) {
 
     console.log(detailedGame);
 
-    if (!detailedGame) {
+    if (!detailedGame.name) {
         return (
             <div className="DetailedGame">
                 <NavBar />
@@ -29,7 +29,7 @@ export default function DetailedGame ({id}) {
         return (
             <div className="DetailedGame" id={detailedGame.id}>
                 <NavBar />
-                <div id="gameDetailed">
+                {!detailedGame.name ? true : <div id="gameDetailed">
                     <h1 id="detit">{detailedGame.name}</h1>
                     <div id="container">
                         <img src={detailedGame.image} alt="Portada del videojuego" id="ima" />
@@ -39,7 +39,7 @@ export default function DetailedGame ({id}) {
                         <p><b>Release Date:</b> {detailedGame.releaseDate}</p>
                         <p><b>Platforms:</b> {detailedGame.platforms.join(", ")}</p>
                     </div>
-                </div>
+                </div>}
             </div>
         )
     

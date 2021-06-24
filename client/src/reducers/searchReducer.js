@@ -6,7 +6,6 @@ let initialState = {
 };
 
 export default function searchReducer (state = initialState, action) {
-    let pagination = state.videogames; 
     
     switch (action.type) {
         case "GET_GAMES":

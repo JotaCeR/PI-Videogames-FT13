@@ -14,7 +14,7 @@ export default function DetailedGame ({id}) {
         dispatch(getDetailedGame(id));
     }, []);
 
-    // useEffect(() => {}, [detailedGame]);
+    useEffect(() => {}, [detailedGame]);
 
     if (!detailedGame) {
         return (

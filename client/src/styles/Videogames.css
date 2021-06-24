@@ -53,8 +53,28 @@
     right: 168px;
 }
 
+.NoFound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.warning {
+  background-color: rgba(221, 56, 56, 0.75);
+  color: beige;
+  padding: 10px;
+  max-width: 175px;
+  border-radius: 10px;
+  border: dashed 4px red;
+  position: absolute;
+  top: 125px;
+  left: 350px;
+}
+
 #ldg {
     color: #74007a;
+    font-size: 250%;
 }
 
 @keyframes ldio-zcztvl17j9o {

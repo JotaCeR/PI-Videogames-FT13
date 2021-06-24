@@ -35,21 +35,24 @@ export default function Videogames () {
 
     if (vgs.length === 0 && search.length === 0) {
         return (
-            <div className="loadingio-spinner-spinner-277hgb3yfo1">
-                <div className="ldio-zcztvl17j9o">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <h1 id="ldg">Loading...</h1>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+            <div className="NoFound">
+                <div className="warning">If the load takes too long, probably no game was found...</div>
+                <div className="loadingio-spinner-spinner-277hgb3yfo1">
+                    <div className="ldio-zcztvl17j9o">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <h1 id="ldg"><b>Loading...</b></h1>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
             </div>
         )

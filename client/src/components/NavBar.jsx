@@ -60,7 +60,7 @@ const NavBar = () => {
                             e.preventDefault();
                             dispatch(getVideogame(game, filters));
                             setGame("");}} >
-                        <input type='text' placeholder="Busca un juego..." value={game} onChange={e => setGame(e.target.value)} />
+                        <input type='text' placeholder="Busca un juego..." value={game} onChange={e => setGame(e.target.value.replaceAll(" ", "-"))} />
                         <input type='submit' value='Buscar' />
                     </form>
                     <Link id="titlink" to="/videogames"><div id="tit">Game Core</div></Link>

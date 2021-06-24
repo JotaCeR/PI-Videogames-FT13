@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import '../styles/CreateGame.css';
 import NavBar from './NavBar';
 const axios = require('axios');
@@ -11,7 +10,7 @@ export default function CreateGame () {
         releaseDate: "",
         rating: 0,
         genres: [],
-        platforms: ""
+        platforms: []
     });
 
     const [errors, setErrors] = useState({
@@ -19,8 +18,6 @@ export default function CreateGame () {
         description: "⚬ A description is required",
         platforms: "⚬ The playable platforms are required"
     });
-
-    let genres = useSelector(state => state.search.genres);
 
     function validation(input) {
         let errors = {};
@@ -75,6 +72,8 @@ export default function CreateGame () {
         await axios.post('http://localhost:3001/videogame', adding);
         alert(`¡Se ha añadido el juego: ${adding.gameName}!`);
     }
+
+    const warn = "Los valores del formulario que se convalidan con un 'checkbox' no son retrotraibles, por lo tanto si llega a equivocarse al seleccionarlos, puede resetear sus elecciones presionando el botón.";
     
     return (
         <div className="CreateGame" key="06PostGame">
@@ -106,13 +105,6 @@ export default function CreateGame () {
                     </div>
                     <div>
                         <label>Game Genres: </label>
-                        {/* <input name="genres" value={game.genres} type="text" onChange={(e) => handleChange(e)} /> */}
-                        {/* {genres.map((gen) => {
-                            <div className="cbxs">
-                            <label for={gen.name}>{gen.name}</label>
-                            <input name={gen.name} value={gen.name} type="checkbox" id={gen.name} />
-                            </div>
-                        })} */}
                         <div className="cbxs">
                             <div>
                                 <label for="Action">Action</label>
@@ -198,6 +190,14 @@ export default function CreateGame () {
                     </div>
                     {!flag ? true : <button id="frmbt" className="create" type="submit">Add Game</button>}
                 </form>
+                {/* <button id="reset" className="create" onClick={setGame({
+                    gameName: "",
+                    gameDescription: "",
+                    releaseDate: "",
+                    rating: 0,
+                    genres: [],
+                    platforms: []
+                    })}>Reset</button> */}
             </div>
         </div>
     )

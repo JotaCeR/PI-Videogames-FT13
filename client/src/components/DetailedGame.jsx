@@ -5,13 +5,16 @@ import { getDetailedGame } from '../actions/search';
 import NavBar from './NavBar';
 
 
-export default function DetailedGame ({id}) {
+export default function DetailedGame ({id, source}) {
     let dispatch = useDispatch();
+
+    const query = new URLSearchParams(source);
+    const result = query.get("source");
 
     let detailedGame = useSelector(state => state.search.gameDetail);
 
     useEffect(() => {
-        dispatch(getDetailedGame(id));
+        dispatch(getDetailedGame(id, result));
     }, []);
 
     useEffect(() => {}, [detailedGame]);
@@ -33,7 +36,7 @@ export default function DetailedGame ({id}) {
                     <h1 id="detit">{detailedGame.name}</h1>
                     <div id="container">
                         <img src={detailedGame.image} alt="Portada del videojuego" id="ima" />
-                        <p><b>Genres:</b> {detailedGame.genres.join(", ")}</p>
+                        {!detailedGame.genres ? true : <p><b>Genres:</b> {detailedGame.genres.join(", ")}</p>}
                         <p><b>Rating:</b> {detailedGame.rating}</p>
                         <p><b>Description:</b> {detailedGame.description}</p>
                         <p><b>Release Date:</b> {detailedGame.releaseDate}</p>

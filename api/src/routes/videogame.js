@@ -4,15 +4,17 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const { Videogame, Genre } = require('../db');
+const { search } = require('./videogames');
 
 router.get('/:game', async function (req, res) {
     const { game } = req.params;
-    const source = req.params.source;
+    const source = req.query.source;
     var url = `https://api.rawg.io/api/games/${game}?key=${API_KEY}`;
     var response;
 
     console.log(game)
     console.log(source)
+    console.log(req.query)
 
     class DetailedGame {
         constructor(name, image, rating, genres, description, releaseDate, platforms, id) {
@@ -32,16 +34,19 @@ router.get('/:game', async function (req, res) {
 
     if (source === "true") {
         try {
-            let dbGame = async (search) => {
-                return await Videogame.findOne({where: {id: search}, include: Genre})
-            }
-            response = dbGame(game);
+            // let dbGame = async (search) => {
+            //     return await Videogame.findOne({where: {id: search}, include: Genre})
+            // }
+            response = await Videogame.findAll({where: {id: game}, include: Genre});
 
-            response.genres.forEach(genre => gen.push(genre.name));
+            response[0].dataValues.genres.forEach(genre => gen.push(genre.name));
 
-            const holdMyGame = new DetailedGame(response.name, null, response.rating, gen, response.description, response.releaseDate, response.platforms, response.id);
+            plats.push(response[0].dataValues.platforms);
+
+            const holdMyGame = new DetailedGame(response[0].dataValues.name, null, response[0].dataValues.rating, gen, response[0].dataValues.description, response[0].dataValues.releaseDate, plats, response[0].dataValues.id);
 
             response = holdMyGame;
+            console.log(response)
         } catch (e) {
             console.error(e);
             res.status(404).send("Can't catch DB game")
@@ -63,7 +68,8 @@ router.get('/:game', async function (req, res) {
             res.status(404).send("Something really bad happened!")
         }
     }
-   
+    console.log(gen)
+    console.log(plats)
 
     res.status(200).json(response);
 })

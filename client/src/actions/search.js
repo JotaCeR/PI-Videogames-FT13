@@ -16,10 +16,10 @@ export function getVideogame(searchedGame, {direction, clasification, origin, ge
     }
 }
 
-export function getDetailedGame(gameId) {
+export function getDetailedGame(gameId, source) {
     console.log(gameId);
     return function (dispatch) {
-        return fetch(`http://localhost:3001/videogame/${gameId}`)
+        return fetch(`http://localhost:3001/videogame/${gameId}?source=${source}`)
         .then(response => response.json())
         .then(json => dispatch({type: 'GET_DETAILS', payload: json}))
         .catch(e => console.log(e));
